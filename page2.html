@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="fr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RACHEL Beauté Africaine</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #FDF6F0;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #2D2926;
+      --accent-primary: #C9A87C;
+      --accent-secondary: #E8B4B8;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .main-wrapper {
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg-primary);
+      overflow-x: hidden;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #FDF6F0 0%, #F8E8E0 50%, #FCE4EC 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(201, 168, 124, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 60%;
+      height: 150%;
+      background: radial-gradient(ellipse, rgba(232, 180, 184, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .golden-line {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      margin: 0 auto;
+    }
+    
+    .service-card {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(201, 168, 124, 0.15);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(201, 168, 124, 0.1);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(201, 168, 124, 0.25);
+    }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 25px rgba(201, 168, 124, 0.3);
+    }
+    
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 50px rgba(201, 168, 124, 0.3);
+    }
+    
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(45, 41, 38, 0.6) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+    
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    
+    .video-container {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(201, 168, 124, 0.3);
+      background: linear-gradient(135deg, #2D2926, #4A4340);
+    }
+    
+    .video-placeholder {
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2D2926, #4A4340);
+      color: white;
+    }
+    
+    .play-button {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 40px rgba(201, 168, 124, 0.5);
+    }
+    
+    .play-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 50px rgba(201, 168, 124, 0.7);
+    }
+    
+    .cta-button {
+      background: linear-gradient(135deg, var(--accent-primary), #D4AF37);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(201, 168, 124, 0.4);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(201, 168, 124, 0.6);
+    }
+    
+    .floating-contact {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .contact-btn {
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .contact-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(37, 211, 102, 0.6);
+    }
+    
+    .section-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(201, 168, 124, 0.15), rgba(232, 180, 184, 0.15));
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent-primary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .testimonial-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid var(--accent-primary);
+    }
+    
+    .stars {
+      color: var(--accent-primary);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-in {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="main-wrapper overflow-auto">
+   <!-- Hero Section -->
+   <section class="hero-section py-16 md:py-24 px-4 relative">
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+     <!-- Logo/Brand -->
+     <div class="mb-8 animate-fade-in">
+      <div class="w-28 h-28 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-100 to-pink-100 flex items-center justify-content-center shadow-xl border-4 border-white overflow-hidden">
+       <svg class="w-full h-full p-4" viewbox="0 0 100 100" fill="none">
+        <circle cx="50" cy="35" r="18" fill="#C9A87C" /> <path d="M50 55 C25 55 15 80 15 95 L85 95 C85 80 75 55 50 55Z" fill="#C9A87C" /> <circle cx="50" cy="35" r="12" fill="#E8B4B8" /> <path d="M35 30 Q50 10 65 30" stroke="#2D2926" stroke-width="2" fill="none" /> <circle cx="45" cy="33" r="2" fill="#2D2926" /> <circle cx="55" cy="33" r="2" fill="#2D2926" /> <path d="M46 40 Q50 44 54 40" stroke="#E8B4B8" stroke-width="2" fill="none" />
+       </svg>
+      </div>
+     </div><span class="section-badge animate-fade-in delay-1">Salon de Beauté Premium</span>
+     <h1 id="salon-name" class="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in delay-2" style="color: var(--text-primary);">RACHEL<br><span style="color: var(--accent-primary);">Beauté Africaine</span></h1>
+     <p id="slogan" class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 animate-fade-in delay-3" style="font-weight: 300;">Révélez votre beauté naturelle avec nos soins experts et notre passion pour l'excellence</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-4">
+      <a href="https://wa.me/243851978994" class="cta-button">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+       </svg><span id="phone-display">0851978994</span> </a> <a href="#services" class="cta-button" style="background: linear-gradient(135deg, var(--accent-secondary), #D4A5A5);"> Découvrir nos services </a>
+     </div>
+    </div><!-- Decorative Elements -->
+    <div class="absolute top-10 left-10 w-20 h-20 opacity-20">
+     <svg viewbox="0 0 100 100" fill="var(--accent-primary)">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" /> <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="2" />
+     </svg>
+    </div>
+    <div class="absolute bottom-10 right-10 w-24 h-24 opacity-20">
+     <svg viewbox="0 0 100 100" fill="var(--accent-secondary)">
+      <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="currentColor" stroke-width="2" />
+     </svg>
+    </div>
+   </section><!-- Services Section -->
+   <section id="services" class="py-16 md:py-24 px-4" style="background: var(--bg-secondary);">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-16">
+      <span class="section-badge">Expertise &amp; Savoir-faire</span>
+      <h2 id="services-title" class="font-display text-3xl md:text-5xl font-bold mb-4" style="color: var(--text-primary);">Nos Services</h2>
+      <div class="golden-line mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Des prestations haut de gamme pour sublimer votre beauté naturelle</p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Service 1 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M12 2C13.1 2 14 2.9 14 4C14 4.74 13.6 5.39 13 5.73V7H14C17.31 7 20 9.69 20 13V20C20 21.1 19.1 22 18 22H6C4.9 22 4 21.1 4 20V13C4 9.69 6.69 7 10 7H11V5.73C10.4 5.39 10 4.74 10 4C10 2.9 10.9 2 12 2M6 13V20H18V13C18 10.79 16.21 9 14 9H10C7.79 9 6 10.79 6 13Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Coiffure Africaine</h3>
+       <p class="text-gray-600 text-sm">Tresses, tissages, nattes et coiffures traditionnelles réalisées par nos expertes</p>
+      </div><!-- Service 2 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M12.75 3.94C13.75 3.22 14.91 2.86 16.22 2.86C16.94 2.86 17.73 3 18.59 3.29L19.91 3.71L19.29 9.1L17.96 8.67C17.26 8.47 16.63 8.36 16.06 8.36C14.69 8.36 13.69 9 13.03 10.28C12.38 11.56 12.06 13.27 12.06 15.41V21H7.92V15.41C7.92 11.16 9.53 7.87 12.75 3.94Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Soins Capillaires</h3>
+       <p class="text-gray-600 text-sm">Traitements nourrissants et réparateurs pour cheveux afro et métissés</p>
+      </div><!-- Service 3 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M9 3C10.11 3 11.08 3.58 11.58 4.42C12.26 4.15 13 4 13.78 4C16.92 4 19.5 6.58 19.5 9.72C19.5 10.73 19.23 11.68 18.75 12.5C19.77 13.35 20.5 14.55 20.5 16C20.5 18.76 18.26 21 15.5 21C14.47 21 13.5 20.7 12.69 20.18L12 20.6L11.31 20.18C10.5 20.7 9.53 21 8.5 21C5.74 21 3.5 18.76 3.5 16C3.5 14.55 4.23 13.35 5.25 12.5C4.77 11.68 4.5 10.73 4.5 9.72C4.5 6.58 7.08 4 10.22 4C11 4 11.74 4.15 12.42 4.42C12.92 3.58 13.89 3 15 3H9Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Maquillage</h3>
+       <p class="text-gray-600 text-sm">Maquillage professionnel pour tous les teints et toutes les occasions</p>
+      </div><!-- Service 4 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M18.5 3C19.33 3 20 3.67 20 4.5V12.5C20 14.43 18.43 16 16.5 16H14.34C14.12 16.6 13.66 17.09 13.06 17.35L12 21L10.94 17.35C10.34 17.09 9.88 16.6 9.66 16H7.5C5.57 16 4 14.43 4 12.5V4.5C4 3.67 4.67 3 5.5 3H18.5ZM16 11V6H8V11H16Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Manucure &amp; Pédicure</h3>
+       <p class="text-gray-600 text-sm">Soins des mains et des pieds avec pose de vernis semi-permanent</p>
+      </div><!-- Service 5 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M20.84 4.61C20.44 4.21 19.77 4.21 19.37 4.61L12 12L4.63 4.61C4.23 4.21 3.56 4.21 3.16 4.61C2.76 5.01 2.76 5.68 3.16 6.08L10.53 13.47L3.16 20.84C2.76 21.24 2.76 21.91 3.16 22.31C3.56 22.71 4.23 22.71 4.63 22.31L12 14.93L19.37 22.31C19.77 22.71 20.44 22.71 20.84 22.31C21.24 21.91 21.24 21.24 20.84 20.84L13.47 13.47L20.84 6.08C21.24 5.68 21.24 5.01 20.84 4.61Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Épilation</h3>
+       <p class="text-gray-600 text-sm">Épilation à la cire pour une peau douce et soyeuse</p>
+      </div><!-- Service 6 -->
+      <div class="service-card p-8 text-center">
+       <div class="service-icon">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6Z" />
+        </svg>
+       </div>
+       <h3 class="font-display text-xl font-semibold mb-3" style="color: var(--text-primary);">Soins du Visage</h3>
+       <p class="text-gray-600 text-sm">Soins personnalisés pour une peau éclatante et revitalisée</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Video Section -->
+   <section class="py-16 md:py-24 px-4" style="background: linear-gradient(135deg, #FDF6F0, #FCE4EC);">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12">
+      <span class="section-badge">Découvrez Notre Univers</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">Notre Savoir-Faire en Vidéo</h2>
+      <div class="golden-line"></div>
+     </div>
+     <div class="video-container" style="max-width: 200px; margin: auto;">
+  <video controls style="width: 100%; height: auto;">
+    <source src="nailvid.mp4" type="video/mp4">
+    Votre navigateur ne supporte pas la balise vidéo.
+  </video>
+</div>
+     <p class="text-center text-gray-600 mt-6 text-sm"><em></em></p>
+    </div>
+   </section><!-- Gallery Section -->
+   <section class="py-16 md:py-24 px-4" style="background: var(--bg-secondary);">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-16">
+      <span class="section-badge">Nos Réalisations</span>
+      <h2 id="gallery-title" class="font-display text-3xl md:text-5xl font-bold mb-4" style="color: var(--text-primary);">Notre Galerie</h2>
+      <div class="golden-line mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Admirez nos plus belles créations et laissez-vous inspirer</p>
+     </div><!-- Gallery Grid - 15 Photos -->
+     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <!-- Row 1 -->
+      <div class="gallery-item aspect-square"><img src="tresse box braids.jpeg" alt="Tresses Box Braids" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="tissage naturel.jpeg" alt="Tissage Naturel" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="maquillage mariée.jpeg" alt="Maquillage Mariée" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="pose d'ongles.jpeg" alt="Pose d'Ongles" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="soins de vissage.jpeg" alt="Soin Visage" class="w-full h-full object-cover" loading="lazy">
+      </div><!-- Row 2 -->
+      <div class="gallery-item aspect-square"><img src="falani braids.jpeg" alt="Fulani Braids" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="coupe moderne.jpeg" alt="Coupe Moderne" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="locs goddess.jpeg" alt="Locs Goddess" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="crochet braids.jpeg" alt="Crochet Braids" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="maquillage soirée.jpeg" alt="Maquillage Soirée" class="w-full h-full object-cover" loading="lazy">
+      </div><!-- Row 3 -->
+      <div class="gallery-item aspect-square"><img src="twist out.jpeg" alt="Twist Out" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="cornrows design.jpeg" alt="Cornrows Design" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="perruque lace.jpeg" alt="Perruque Lace" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="bantu knots.jpeg" alt="Bantu Knots" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="gallery-item aspect-square"><img src="afro naturel.jpeg" alt="Afro Naturel" class="w-full h-full object-cover" loading="lazy">
+      </div>
+     </div>
+     <p class="text-center text-gray-500 mt-8 text-sm"><em></em></p>
+    </div>
+   </section><!-- Testimonials Section -->
+   <section class="py-16 md:py-24 px-4" style="background: linear-gradient(135deg, #FDF6F0, #F8E8E0);">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-16">
+      <span class="section-badge">Témoignages</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">Ce Que Disent Nos Clientes</h2>
+      <div class="golden-line"></div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="testimonial-card">
+       <div class="stars mb-4">
+        ★★★★★
+       </div>
+       <p class="text-gray-600 mb-4 italic">"Un service exceptionnel ! Rachel et son équipe sont de vraies artistes. Mes tresses sont parfaites et tiennent longtemps."</p>
+       <p class="font-semibold" style="color: var(--accent-primary);">— Marie K.</p>
+      </div>
+      <div class="testimonial-card">
+       <div class="stars mb-4">
+        ★★★★★
+       </div>
+       <p class="text-gray-600 mb-4 italic">"Le meilleur salon de beauté africaine ! L'ambiance est chaleureuse et le résultat toujours au-delà de mes attentes."</p>
+       <p class="font-semibold" style="color: var(--accent-primary);">— Fatou D.</p>
+      </div>
+      <div class="testimonial-card">
+       <div class="stars mb-4">
+        ★★★★★
+       </div>
+       <p class="text-gray-600 mb-4 italic">"Mon maquillage de mariage était sublime. Merci pour avoir rendu ce jour encore plus spécial !"</p>
+       <p class="font-semibold" style="color: var(--accent-primary);">— Aminata S.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section class="py-16 md:py-24 px-4" style="background: linear-gradient(135deg, #2D2926, #4A4340);">
+    <div class="max-w-4xl mx-auto text-center">
+     <span class="section-badge" style="background: rgba(201, 168, 124, 0.2); color: var(--accent-primary);">Contactez-Nous</span>
+     <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-white">Prête à Révéler Votre Beauté ?</h2>
+     <p class="text-gray-300 mb-10 max-w-2xl mx-auto">Appelez-nous dès maintenant pour prendre rendez-vous ou obtenir plus d'informations sur nos services</p>
+     <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+      <a href="tel:0851978994" class="cta-button text-lg">
+       <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+       </svg> 0851978994 </a> <a href="page3.html" target="_blank" rel="noopener noreferrer" class="cta-button text-lg" style="background: linear-gradient(135deg, #25D366, #128C7E);">
+       <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+        <path />
+       </svg> prenez rendez-vous </a>
+     </div>
+     <div class="mt-12 pt-8 border-t border-gray-600">
+      <p class="text-gray-400 text-sm"> 2024 RACHEL Beauté Africaine.</p>
+     </div>
+    </div>
+   </section><!-- Floating Contact Button -->
+   <div class="floating-contact">
+    <a href="tel:0851978994" class="contact-btn">
+     <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24">
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+     </svg></a>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      salon_name: "RACHEL Beauté Africaine",
+      slogan: "Révélez votre beauté naturelle avec nos soins experts et notre passion pour l'excellence",
+      phone_number: "0851978994",
+      services_title: "Nos Services",
+      gallery_title: "Notre Galerie",
+      background_color: "#FDF6F0",
+      surface_color: "#FFFFFF",
+      text_color: "#2D2926",
+      primary_accent: "#C9A87C",
+      secondary_accent: "#E8B4B8",
+      font_family: "Playfair Display",
+      font_size: 16
+    };
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          // Update salon name
+          const salonNameEl = document.getElementById('salon-name');
+          if (salonNameEl) {
+            const name = config.salon_name || defaultConfig.salon_name;
+            const parts = name.split(' ');
+            if (parts.length > 1) {
+              salonNameEl.innerHTML = `${parts[0]}<br><span style="color: var(--accent-primary);">${parts.slice(1).join(' ')}</span>`;
+            } else {
+              salonNameEl.textContent = name;
+            }
+          }
+          
+          // Update slogan
+          const sloganEl = document.getElementById('slogan');
+          if (sloganEl) {
+            sloganEl.textContent = config.slogan || defaultConfig.slogan;
+          }
+          
+          // Update phone displays
+          const phoneDisplay = document.getElementById('phone-display');
+          if (phoneDisplay) {
+            phoneDisplay.textContent = config.phone_number || defaultConfig.phone_number;
+          }
+          
+          // Update services title
+          const servicesTitle = document.getElementById('services-title');
+          if (servicesTitle) {
+            servicesTitle.textContent = config.services_title || defaultConfig.services_title;
+          }
+          
+          // Update gallery title
+          const galleryTitle = document.getElementById('gallery-title');
+          if (galleryTitle) {
+            galleryTitle.textContent = config.gallery_title || defaultConfig.gallery_title;
+          }
+          
+          // Update colors
+          const bgColor = config.background_color || defaultConfig.background_color;
+          const surfaceColor = config.surface_color || defaultConfig.surface_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          const primaryAccent = config.primary_accent || defaultConfig.primary_accent;
+          const secondaryAccent = config.secondary_accent || defaultConfig.secondary_accent;
+          
+          document.documentElement.style.setProperty('--bg-primary', bgColor);
+          document.documentElement.style.setProperty('--bg-secondary', surfaceColor);
+          document.documentElement.style.setProperty('--text-primary', textColor);
+          document.documentElement.style.setProperty('--accent-primary', primaryAccent);
+          document.documentElement.style.setProperty('--accent-secondary', secondaryAccent);
+          
+          // Update font
+          const fontFamily = config.font_family || defaultConfig.font_family;
+          const fontSize = config.font_size || defaultConfig.font_size;
+          
+          document.querySelectorAll('.font-display').forEach(el => {
+            el.style.fontFamily = `${fontFamily}, serif`;
+          });
+          
+          document.body.style.fontSize = `${fontSize}px`;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => window.elementSdk.setConfig({ surface_color: value })
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => config.primary_accent || defaultConfig.primary_accent,
+              set: (value) => window.elementSdk.setConfig({ primary_accent: value })
+            },
+            {
+              get: () => config.secondary_accent || defaultConfig.secondary_accent,
+              set: (value) => window.elementSdk.setConfig({ secondary_accent: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => window.elementSdk.setConfig({ font_family: value })
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => window.elementSdk.setConfig({ font_size: value })
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["salon_name", config.salon_name || defaultConfig.salon_name],
+          ["slogan", config.slogan || defaultConfig.slogan],
+          ["phone_number", config.phone_number || defaultConfig.phone_number],
+          ["services_title", config.services_title || defaultConfig.services_title],
+          ["gallery_title", config.gallery_title || defaultConfig.gallery_title]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db614c430300db4',t:'MTc3MzM1MjkyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

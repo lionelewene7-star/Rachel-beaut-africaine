@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rachel beauté africaine - Rechercher un service</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    :root {
+        --gold: #D4AF37;
+        --dark: #1a1a1a;
+        --overlay: rgba(0,0,0,0.4);
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        background: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1920') center/cover no-repeat fixed;
+        color: white;
+        overflow-x: hidden;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: var(--overlay);
+        z-index: 0;
+    }
+    
+    .topbar {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 3%;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .logo img {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+    
+    .top-actions {
+        display: flex;
+        gap: 1.5rem;
+        background: rgba(0,0,0,0.65);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        max-width: 400px;
+        border: 1px solid rgba(255,255,255,0.1);
+        flex: 1;
+        Border-radius: 15px;
+    }
+    
+    .top-actions a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
+    
+    .top-actions a:hover {
+        text-decoration: underline;
+    }
+    
+    .search-container {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 5vh;
+        padding-bottom: 2rem;
+    }
+    
+    .search-box {
+        width: 90%;
+        max-width: 700px;
+        background: white;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        padding: 5px 25px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        transition: all 0.3s;
+    }
+    
+    .search-box:focus-within {
+        box-shadow: 0 12px 40px rgba(212,175,55,0.4);
+    }
+    
+    .search-box input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 18px 10px;
+        font-size: 1.1rem;
+        background: transparent;
+        color: var(--dark);
+    }
+    
+    .search-icon {
+        font-size: 1.3rem;
+        color: #666;
+        margin-right: 10px;
+    }
+    
+    .service-chips {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        overflow-x: auto;
+        padding: 0 5%;
+        scrollbar-width: none;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .service-chips::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .chip {
+        min-width: 180px;
+        height: 110px;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex-shrink: 0;
+        border: 2px solid transparent;
+    }
+    
+    .chip:hover {
+        transform: translateY(-5px) scale(1.03);
+        border-color: var(--gold);
+    }
+    
+    .chip img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .chip span {
+        position: absolute;
+        bottom: 8px;
+        left: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    
+    .widgets {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 2rem 3% 3rem 3%;
+        margin-top: 2rem;
+    }
+    
+    .widget {
+        background: rgba(0,0,0,0.65);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        max-width: 400px;
+        border: 1px solid rgba(255,255,255,0.1);
+        flex: 1;
+    }
+    
+    .widget h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        color: var(--gold);
+    }
+    
+    .widget p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        opacity: 0.9;
+    }
+    
+    .widget-btn {
+        background: var(--gold);
+        color: var(--dark);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        margin-top: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .widget-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+    }
+    
+    .team-mini {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .team-mini img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid var(--gold);
+        object-fit: cover;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(5px);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .modal.active {
+        display: flex;
+    }
+    
+    .modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        max-width: 600px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        color: var(--dark);
+        animation: slideUp 0.4s ease;
+    }
+    
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .modal-header h2 {
+        color: var(--dark);
+        font-size: 1.8rem;
+    }
+    
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #666;
+    }
+    
+    .booking-form {
+        display: grid;
+        gap: 1.2rem;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .form-group label {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+        border-color: var(--gold);
+        outline: none;
+    }
+    
+    .radio-group {
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+    
+    .btn-submit {
+        background: var(--gold);
+        color: var(--dark);
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(212,175,55,0.4);
+    }
+    
+    @media (max-width: 768px) {
+        .widgets {
+            flex-direction: column;
+        }
+        .search-container {
+            padding-top: 3vh;
+        }
+        .chip {
+            min-width: 150px;
+            height: 100px;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">
+            <img style="height: 150px; width: 150px; border-radius: 50%;" src="logoo.jpeg" alt="Logo">
+            <h1>Rachel beauté africaine</h1>
+        </div>
+        <div class="top-actions">
+            <a style="background-color: ; border-radius: 5px; " onclick="openModal()"><strong><H3>Réserver</H3> </strong> </a>
+            <a style="background-color: ; border-radius: 5px;" onclick="openModal()"> <strong><H3>Contact</H3></strong></a>
+             <a style="background-color: ; border-radius: 5px;" href="index.html" target="_blank"> <strong><H3>rentrez</H3></strong></a>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Rechercher un service : pédicure, massage, coiffure..." onkeypress="handleSearch(event)">
+        </div>
+        
+        <div class="service-chips">
+            <div class="chip" onclick="quickSearch('Pédicure')">
+                <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=400" alt="Pédicure">
+                <span>Pédicure</span>
+            </div>
+            <div class="chip" onclick="quickSearch('Manucure')">
+                <img src="pose d'ongles.jpeg" alt="Manucure">
+                <span>Manucure</span>
+            </div>
+            <div class="chip" onclick="quickSearch('Massage')">
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400" alt="Massage">
+                <span>Massage</span>
+            </div>
+            <div class="chip" onclick="quickSearch('Coiffure')">
+                <img src="falani braids.jpeg" alt="Coiffure">
+                <span>Coiffure</span>
+            </div>
+            <div class="chip" onclick="quickSearch('Soin de visage')">
+                <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400" alt="Soin visage">
+                <span>Soin visage</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="widgets">
+        <div class="widget">
+            <h3>Rachel beauté africaine, Kintambo</h3>
+            <p>Salon premium au cœur de Kinshasa. Soins au salon ou à domicile avec notre équipe de 5 experts.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">📍 Avenue Tabora 12, Rue OUA, Kintambo</p>
+            <button class="widget-btn" onclick="openModal()">Prendre RDV</button>
+            <div class="team-mini">
+                <img src="chela.jpeg" alt="Rachel" title="Rachel - Propriétaire">
+                <img src="steve.jpeg" alt="Steve" title="Steve - Coiffeur">
+                <img src="moise.jpeg" alt="Moise" title="Moise - Masseur">
+                <img src="Ruth.jpeg" alt="Ruth" title="Ruth - Ongles">
+                <img src="joice.jpeg" alt="Joïce" title="Joïce - Make-up">
+            </div>
+        </div>
+        
+        <div class="widget">
+            <h3>Service à domicile disponible</h3>
+            <p>Profitez de tous nos soins chez vous à Kinshasa. Choisissez votre personnel préféré lors de la réservation.</p>
+            <button class="widget-btn" onclick="window.open('https://api.whatsapp.com/send?phone=243851978994&text=Bonjour%20je%20veux%20un%20service%20à%20domicile', '_blank')">WhatsApp Direct</button>
+        </div>
+    </div>
+
+    <!-- Modal Formulaire -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Réserver votre soin</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <form class="booking-form" onsubmit="handleBooking(event)">
+                <div class="form-group">
+                    <label>Votre nom</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="clientPhone" placeholder="+243..." required>
+                </div>
+                <div class="form-group">
+                    <label>Service souhaité</label>
+                    <select id="serviceSelect" required>
+                        <option value="">Choisir un service</option>
+                        <option>Pédicure</option>
+                        <option>Manucure</option>
+                        <option>Massage</option>
+                        <option>Soin de visage</option>
+                        <option>Pose faux cils</option>
+                        <option>Coiffure</option>
+                        <option>Épilation</option>
+                        <option>Maquillage</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Personnel préféré</label>
+                    <select id="staffSelect">
+                        <option value="">Aucune préférence</option>
+                        <option>Rachel</option>
+                        <option>Steve</option>
+                        <option>Moise</option>
+                        <option>Ruth</option>
+                        <option>Joïce</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date & Heure</label>
+                    <input type="datetime-local" id="bookingDateTime" required>
+                </div>
+                <div class="form-group">
+                    <label>Lieu du service</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="lieu" value="salon" checked> Au salon</label>
+                        <label><input type="radio" name="lieu" value="domicile"> À domicile</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Adresse si domicile</label>
+                    <textarea id="notes" rows="2" placeholder="Votre adresse complète..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Confirmer via WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+    function handleSearch(e) {
+        if (e.key === 'Enter') {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                document.getElementById('serviceSelect').value = query;
+                openModal();
+            }
+        }
+    }
+    
+    function quickSearch(service) {
+        document.getElementById('searchInput').value = service;
+        document.getElementById('serviceSelect').value = service;
+        openModal();
+    }
+    
+    function openModal() {
+        document.getElementById('bookingModal').classList.add('active');
+    }
+    
+    function closeModal() {
+        document.getElementById('bookingModal').classList.remove('active');
+    }
+    
+    function handleBooking(e) {
+        e.preventDefault();
+        const name = document.getElementById('clientName').value;
+        const phone = document.getElementById('clientPhone').value;
+        const service = document.getElementById('serviceSelect').value;
+        const staff = document.getElementById('staffSelect').value || 'Aucune préférence';
+        const datetime = document.getElementById('bookingDateTime').value;
+        const lieu = document.querySelector('input[name="lieu"]:checked').value;
+        const notes = document.getElementById('notes').value;
+        
+        const message = `Bonjour Rachel beauté africaine !%0A%0AJe souhaite réserver :%0A📋 Service : ${service}%0A👤 Personnel : ${staff}%0A📅 Date/Heure : ${datetime}%0A📍 Lieu : ${lieu === 'domicile' ? 'À domicile' : 'Au salon'}%0A%0A👤 Nom : ${name}%0A📞 Tel : ${phone}%0A📝 Adresse/Notes : ${notes || 'Aucune'}`;
+        
+        window.open(`https://api.whatsapp.com/send?phone=243851978994&text=${message}`, '_blank');
+        closeModal();
+    }
+    
+    document.getElementById('bookingModal').addEventListener('click', (e) => {
+        if (e.target.id === 'bookingModal') closeModal();
+    });
+</script>
+</body>
+</html>
